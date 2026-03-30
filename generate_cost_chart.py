@@ -60,5 +60,5 @@ plt.xlim(0, 100)
 plt.ylim(0, 220)
 
 plt.tight_layout()
-plt.savefig("results/figures/fig2_cost_vs_rps.png", dpi=300)
+plt.savefig("results/figures/cost_vs_rps.png", dpi=300)
 print(f"Figure 2 generated successfully. Break-even at {break_even_rps:.2f} RPS.")

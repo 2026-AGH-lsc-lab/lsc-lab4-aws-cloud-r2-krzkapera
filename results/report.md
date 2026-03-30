@@ -16,7 +16,7 @@ Endpoints deployed and verified. Results match across all targets. Output is sav
 | Warm Start - Handler avg | 38.75 ms | 74.38 ms |
 | Warm Start - Network RTT | 57.75 ms | 23.32 ms |
 
-![Figure 1: Latency Decomposition](figures/fig1_latency_decomposition.png)
+![Figure 1: Latency Decomposition](figures/latency_decomposition.png)
 
 Init Duration is similar for both ZIP and Container, but it is a bit higher for ZIP. It may indicate that the container deployment is better optimized by e.g. caching, and also unpacking a ZIP file adds some overhead.
 
@@ -95,6 +95,6 @@ $\text{Lambda cost} = \text{requests} \times \$0.0000002 + (\text{requests} \tim
 
 The initial configuration had $\frac{8370000}{30 * 24 * 60 * 60} \approx 3.23$ RPS, which is below the break-even point, so Lambda is more cost-effective in this scenario. If the traffic increases to around 7.22 RPS, the costs of Lambda and Fargate would be approximately equal.
 
-![Figure 2: Cost Analysis](figures/fig2_cost_vs_rps.png)
+![Figure 2: Cost Analysis](figures/cost_vs_rps.png)
 
-
+I recommend using Lambda despite not meeting the SLO under burst traffic. However, the other environments do not meet the SLO either, and Lambda is much more cost-effective for the expected traffic pattern. To mitigate cold start issues, a warm-up strategy can be implemented to keep a certain number of environments initialized, or Provisioned Concurrency can be used, which keeps a specified number of environments always ready to handle requests, but will increase the cost. The recommendation would change if the average load exeeds 7.22 RPS, in which case Fargate would become more cost-effective.

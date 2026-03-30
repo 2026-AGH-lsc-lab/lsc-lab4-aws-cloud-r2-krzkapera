@@ -95,5 +95,5 @@ ax.grid(axis="y", linestyle="-", alpha=0.3)
 ax.set_ylim(0, 1600)
 
 plt.tight_layout()
-plt.savefig("results/figures/fig1_latency_decomposition.png", dpi=300)
+plt.savefig("results/figures/latency_decomposition.png", dpi=300)
 print("Figure 1 updated with finalized values.")
