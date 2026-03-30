@@ -1,0 +1,33 @@
+[ec2-user@ip-172-31-67-5 lsc-lab4-aws-cloud-r2-krzkapera]$ # Test via CLI invoke (bypasses Function URL auth):
+aws lambda invoke --function-name lsc-knn-zip \
+    --cli-binary-format raw-in-base64-out \
+    --payload "$(python3 -c 'import json; q=json.load(open("loadtest/query.json")); print(json.dumps({"body": json.dumps(q)}))')" \
+    /tmp/out.json
+cat /tmp/out.json
+{
+    "StatusCode": 200,
+    "ExecutedVersion": "$LATEST"
+}
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "35.450", "X-Instance-Id": "2026/03/23/[$LATEST]69316c5774454c92a9d0fb14bcfa2b3f", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 35.45, \"instance_id\": \"2026/03/23/[$LATEST]69316c5774454c92a9d0fb14bcfa2b3f\", \"cold_start\": true}"}
+
+
+[ec2-user@ip-172-31-67-5 lsc-lab4-aws-cloud-r2-krzkapera]$ aws lambda invoke --function-name lsc-knn-container \
+    --cli-binary-format raw-in-base64-out \
+    --payload "$(python3 -c 'import json; q=json.load(open("loadtest/query.json")); print(json.dumps({"body": json.dumps(q)}))')" \
+    /tmp/out.json
+cat /tmp/out.json
+{
+    "StatusCode": 200,
+    "ExecutedVersion": "$LATEST"
+}
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "82.988", "X-Instance-Id": "2026/03/23/[$LATEST]c796d30eb3404dadb55d0fd735033756", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 82.988, \"instance_id\": \"2026/03/23/[$LATEST]c796d30eb3404dadb55d0fd735033756\", \"cold_start\": true}"}
+
+
+[ec2-user@ip-172-31-67-5 lsc-lab4-aws-cloud-r2-krzkapera]$ curl -X POST -H "Content-Type: application/json" -d @loadtest/query.json \
+    http://lsc-knn-alb-292661492.us-east-1.elb.amazonaws.com/search
+{"instance_id":"ip-172-31-43-233.ec2.internal","query_time_ms":24.345,"results":[{"distance":12.001459121704102,"index":35859},{"distance":12.059946060180664,"index":24682},{"distance":12.487079620361328,"index":35397},{"distance":12.489519119262695,"index":20160},{"distance":12.499402046203613,"index":30454}]}
+
+
+[ec2-user@ip-172-31-67-5 lsc-lab4-aws-cloud-r2-krzkapera]$ curl -X POST -H "Content-Type: application/json" -d @loadtest/query.json \
+    http://44.204.143.100:8080/search
+{"instance_id":"83fc77414379","query_time_ms":32.426,"results":[{"distance":12.001459121704102,"index":35859},{"distance":12.059946060180664,"index":24682},{"distance":12.487079620361328,"index":35397},{"distance":12.489519119262695,"index":20160},{"distance":12.499402046203613,"index":30454}]}

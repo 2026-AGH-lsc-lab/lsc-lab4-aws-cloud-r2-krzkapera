@@ -1,0 +1,45 @@
+=== ec2 | concurrency=10 | 500 requests ===
+Summary:
+  Success rate:	100.00%
+  Total:	8239.9396 ms
+  Slowest:	280.4781 ms
+  Fastest:	49.3864 ms
+  Average:	164.2947 ms
+  Requests/sec:	60.6801
+
+  Total data:	144.77 KiB
+  Size/request:	296 B
+  Size/sec:	17.57 KiB
+
+Response time histogram:
+   49.386 ms [1]  |
+   72.496 ms [10] |■■■
+   95.605 ms [21] |■■■■■■■
+  118.714 ms [52] |■■■■■■■■■■■■■■■■■■
+  141.823 ms [83] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  164.932 ms [90] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  188.041 ms [86] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  211.151 ms [77] |■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  234.260 ms [46] |■■■■■■■■■■■■■■■■
+  257.369 ms [24] |■■■■■■■■
+  280.478 ms [10] |■■■
+
+Response time distribution:
+  10.00% in 101.8647 ms
+  25.00% in 132.7272 ms
+  50.00% in 162.7097 ms
+  75.00% in 198.2605 ms
+  90.00% in 226.0134 ms
+  95.00% in 239.5000 ms
+  99.00% in 267.2245 ms
+  99.90% in 280.4781 ms
+  99.99% in 280.4781 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	0.3902 ms, 0.2432 ms, 0.6427 ms
+  DNS-lookup:	0.0077 ms, 0.0012 ms, 0.0454 ms
+
+Status code distribution:
+  [200] 500 responses
+
